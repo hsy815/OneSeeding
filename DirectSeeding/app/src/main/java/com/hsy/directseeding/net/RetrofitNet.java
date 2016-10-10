@@ -18,9 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
  */
 public class RetrofitNet {
 
-    //public static final String BASE_URL = "http://10.10.10.111:4006/";
-    //public static final String BASE_URL = "http://101.95.153.34:4006/";
-    public static final String BASE_URL = "http://api.dongwuxishe.com/";
+    public static final String BASE_URL = "http://wonapi.maxleap.cn/1.0/";
 
     public static APIService request() {
         Retrofit retrofit = new Retrofit.Builder()
