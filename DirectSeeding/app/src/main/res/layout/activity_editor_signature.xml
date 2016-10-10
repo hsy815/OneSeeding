@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_editor_signature"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f0f0f0"
+    tools:context="com.hsy.directseeding.activity.EditorSignatureActivity">
+
+    <include layout="@layout/tab_title" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="140dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff">
+
+        <EditText
+            android:id="@+id/content_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@null"
+            android:hint="请输入"
+            android:maxLength="32"
+            android:textColor="@color/black_8e"
+            android:textColorHint="@color/black_8e" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="15dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/number_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:textColor="#8f8f8f"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="/32"
+                android:textColor="#8f8f8f"
+                android:textSize="15sp" />
+
+        </LinearLayout>
+
+
+    </RelativeLayout>
+
+</LinearLayout>

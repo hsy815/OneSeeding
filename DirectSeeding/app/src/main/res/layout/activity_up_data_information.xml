@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_up_data_information"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#f0f0f0"
+    tools:context="com.hsy.directseeding.activity.UpDataInformationActivity">
+
+    <include layout="@layout/tab_title" />
+
+    <com.hsy.directseeding.view.ClearEditText
+        android:id="@+id/name_edit"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="#ffffff"
+        android:hint="请输入"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:singleLine="true"
+        android:textColor="@color/black_44"
+        android:textColorHint="@color/black_8e"
+        android:textSize="17sp" />
+
+</LinearLayout>

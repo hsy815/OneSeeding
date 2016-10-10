@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_start"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/holo_blue_dark"
+    android:orientation="vertical"
+    tools:context="com.hsy.directseeding.activity.StartActivity">
+
+
+    <ImageView
+        android:id="@+id/mine_btn_img"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="15dp"
+        android:src="@mipmap/ic_launcher" />
+
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@null"
+        android:hint="给直播写个标题吧"
+        android:textColorHint="#ffffff"
+        android:textSize="20sp" />
+
+
+    <TextView
+        android:id="@+id/start_btn"
+        android:layout_width="match_parent"
+        android:layout_height="55dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/shape_btn_white"
+        android:gravity="center"
+        android:text="开始直播"
+        android:textColor="#ffffff"
+        android:textSize="18sp" />
+
+
+</LinearLayout>
