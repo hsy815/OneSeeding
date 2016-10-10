@@ -3,6 +3,7 @@ package com.hsy.directseeding.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -21,6 +22,8 @@ public class SettingActivity extends BaseActivity {
     RelativeLayout settingAboutLayout;
     @BindView(R.id.setting_share_layout)
     RelativeLayout settingShareLayout;
+    @BindView(R.id.title_back)
+    LinearLayout titleBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +39,7 @@ public class SettingActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.setting_about_layout, R.id.setting_share_layout})
+    @OnClick({R.id.setting_about_layout, R.id.setting_share_layout, R.id.title_back})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -46,6 +49,10 @@ public class SettingActivity extends BaseActivity {
                 break;
             case R.id.setting_share_layout:
                 break;
+            case R.id.title_back:
+                finish();
+                break;
         }
     }
+
 }

@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.hsy.directseeding.view.CircleImageView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.hsy.directseeding.view.CircleImageView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/img_item"
-    android:layout_width="35dp"
-    android:layout_height="35dp"
-    android:src="@mipmap/ic_launcher" />
+    android:layout_width="26dp"
+    android:layout_height="26dp"
+    android:src="@mipmap/icn_live_personal" />
 

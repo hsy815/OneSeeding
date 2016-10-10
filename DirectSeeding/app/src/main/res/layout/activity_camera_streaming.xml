@@ -35,9 +35,9 @@
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:visibility="gone"
         android:layout_alignParentBottom="true"
-        android:contentDescription="@string/cd_et_input_method" />
+        android:contentDescription="@string/cd_et_input_method"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/camera_switch_btn"
@@ -55,11 +55,11 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/pldroid_streaming_streaming_status_padding"
         android:layout_marginTop="@dimen/pldroid_streaming_streaming_status_padding"
-        android:visibility="gone"
         android:background="@android:color/transparent"
         android:contentDescription="@string/cd_tv_stream_status"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/pldroid_streaming_white" />
+        android:textColor="@color/pldroid_streaming_white"
+        android:visibility="gone" />
 
     <Button
         android:id="@+id/torch_btn"

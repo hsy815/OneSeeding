@@ -15,14 +15,14 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="15dp"
         android:layout_marginTop="15dp"
-        android:src="@mipmap/ic_launcher" />
+        android:src="@mipmap/btn_information" />
 
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="60dp"
         android:background="@null"
         android:hint="给直播写个标题吧"
         android:textColorHint="#ffffff"

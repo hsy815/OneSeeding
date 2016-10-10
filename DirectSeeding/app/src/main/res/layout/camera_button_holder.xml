@@ -31,12 +31,12 @@
             android:id="@+id/streaming_list"
             android:layout_width="match_parent"
             android:layout_height="200dp"
+            android:layout_above="@+id/linearLayout"
             android:divider="@null"
             android:fastScrollEnabled="false"
             android:scrollbars="none"
-            android:transcriptMode="alwaysScroll"
             android:stackFromBottom="true"
-            android:layout_above="@+id/linearLayout">
+            android:transcriptMode="alwaysScroll">
 
         </ListView>
 
@@ -55,34 +55,54 @@
                 android:layout_height="45dp"
                 android:visibility="visible">
 
-                <ImageView
+                <RelativeLayout
                     android:id="@+id/image1"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_alignParentStart="true"
-                    android:layout_centerVertical="true"
                     android:layout_marginStart="10dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:background="@mipmap/btn_bg">
 
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/icn_message" />
 
-                <ImageView
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/image3"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_alignParentEnd="true"
                     android:layout_alignTop="@+id/image1"
                     android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher" />
+                    android:background="@mipmap/btn_bg">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/icn_live_exit" />
+                </RelativeLayout>
 
 
-                <ImageView
+                <RelativeLayout
                     android:id="@+id/image2"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="36dp"
+                    android:layout_height="36dp"
                     android:layout_alignTop="@+id/image3"
                     android:layout_marginEnd="15dp"
                     android:layout_toStartOf="@+id/image3"
-                    android:src="@mipmap/ic_launcher" />
+                    android:background="@mipmap/btn_bg">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerInParent="true"
+                        android:src="@mipmap/icn_share" />
+                </RelativeLayout>
 
             </RelativeLayout>
 
@@ -98,10 +118,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_margin="5dp"
-                    android:paddingLeft="10dp"
-                    android:imeOptions="actionSend"
+                    android:layout_toStartOf="@+id/image5"
                     android:background="@drawable/yuanjiao_brck"
-                    android:layout_toStartOf="@+id/image5" />
+                    android:imeOptions="actionSend"
+                    android:paddingLeft="10dp" />
 
                 <ImageView
                     android:id="@+id/image4"

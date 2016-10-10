@@ -7,37 +7,30 @@ import android.content.Intent;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.transition.Transition;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
-import android.view.animation.Animation;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hsy.directseeding.R;
 import com.hsy.directseeding.adapter.NewsAdapter;
 import com.hsy.directseeding.adapter.PropertyImgAdapter;
-import com.hsy.directseeding.adapter.RecyclerAdapter;
 import com.hsy.directseeding.entity.News;
 import com.hsy.directseeding.view.CameraPreviewFrameView;
 import com.hsy.directseeding.view.CircleImageView;
 import com.hsy.directseeding.view.MyRecyclerView;
 import com.qiniu.pili.droid.streaming.AVCodecType;
 import com.qiniu.pili.droid.streaming.MediaStreamingManager;
-import com.qiniu.pili.droid.streaming.WatermarkSetting;
 import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
 
 import java.util.ArrayList;
@@ -48,8 +41,8 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
     private LinearLayout status_top;
     private MyRecyclerView myRecycler;
     private PropertyImgAdapter recyclerAdapter;
-    private ImageView image1;
-    private ImageView image3;
+    private RelativeLayout image1;
+    private RelativeLayout image3;
     private ImageView image4;
     private ImageView image5;
     private RelativeLayout relativeLayout1;
@@ -132,8 +125,8 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
             }
         });
 
-        image1 = (ImageView) findViewById(R.id.image1);
-        image3 = (ImageView) findViewById(R.id.image3);
+        image1 = (RelativeLayout) findViewById(R.id.image1);
+        image3 = (RelativeLayout) findViewById(R.id.image3);
         image4 = (ImageView) findViewById(R.id.image4);
         image5 = (ImageView) findViewById(R.id.image5);
         image1.setOnClickListener(this);

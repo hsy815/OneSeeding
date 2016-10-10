@@ -31,12 +31,12 @@
                 android:textSize="17sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icn_item_into" />
 
         </RelativeLayout>
 
@@ -60,12 +60,12 @@
                 android:textSize="17sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icn_item_into" />
 
         </RelativeLayout>
 
@@ -90,12 +90,12 @@
                 android:textSize="17sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icn_item_into" />
 
         </RelativeLayout>
 
@@ -119,12 +119,12 @@
                 android:textSize="17sp" />
 
             <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="8dp"
+                android:layout_height="13dp"
                 android:layout_alignParentRight="true"
                 android:layout_centerVertical="true"
                 android:layout_marginRight="15dp"
-                android:src="@mipmap/ic_launcher" />
+                android:src="@mipmap/icn_item_into" />
 
         </RelativeLayout>
 

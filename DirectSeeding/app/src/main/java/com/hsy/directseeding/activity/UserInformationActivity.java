@@ -3,6 +3,7 @@ package com.hsy.directseeding.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -25,6 +26,8 @@ public class UserInformationActivity extends BaseActivity {
     RelativeLayout userSignatureLayout;
     @BindView(R.id.user_home_layout)
     RelativeLayout userHomeLayout;
+    @BindView(R.id.title_back)
+    LinearLayout titleBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +43,7 @@ public class UserInformationActivity extends BaseActivity {
 
     }
 
-    @OnClick({R.id.user_name_layout, R.id.user_img_layout, R.id.user_signature_layout, R.id.user_home_layout})
+    @OnClick({R.id.user_name_layout, R.id.user_img_layout, R.id.user_signature_layout, R.id.user_home_layout, R.id.title_back})
     public void onClick(View view) {
         Intent intent;
         switch (view.getId()) {
@@ -56,6 +59,10 @@ public class UserInformationActivity extends BaseActivity {
                 break;
             case R.id.user_home_layout:
                 break;
+            case R.id.title_back:
+                finish();
+                break;
         }
     }
+
 }

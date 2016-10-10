@@ -5,6 +5,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hsy.directseeding.BaseActivity;
@@ -24,6 +25,8 @@ public class EditorSignatureActivity extends BaseActivity {
     EditText contentText;
     @BindView(R.id.number_text)
     TextView numberText;
+    @BindView(R.id.title_back)
+    LinearLayout titleBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,12 +70,16 @@ public class EditorSignatureActivity extends BaseActivity {
         });
     }
 
-    @OnClick(R.id.title_right_text)
+    @OnClick({R.id.title_right_text, R.id.title_back})
     public void onClick(View view) {
-        switch (view.getId()){
+        switch (view.getId()) {
             case R.id.title_right_text:
 
                 break;
+            case R.id.title_back:
+                finish();
+                break;
         }
     }
+
 }

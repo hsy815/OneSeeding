@@ -42,12 +42,12 @@
 
         <ImageView
             android:id="@+id/image1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="13dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icn_item_into" />
 
     </RelativeLayout>
 
@@ -83,12 +83,12 @@
 
         <ImageView
             android:id="@+id/image2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="13dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icn_item_into" />
 
     </RelativeLayout>
 
@@ -127,12 +127,12 @@
 
         <ImageView
             android:id="@+id/image3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="13dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icn_item_into" />
 
     </RelativeLayout>
 
@@ -170,12 +170,12 @@
 
         <ImageView
             android:id="@+id/image4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="8dp"
+            android:layout_height="13dp"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="15dp"
-            android:src="@mipmap/ic_launcher" />
+            android:src="@mipmap/icn_item_into" />
 
     </RelativeLayout>
 

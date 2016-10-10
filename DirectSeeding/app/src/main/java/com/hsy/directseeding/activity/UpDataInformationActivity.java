@@ -2,6 +2,7 @@ package com.hsy.directseeding.activity;
 
 import android.os.Bundle;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.hsy.directseeding.BaseActivity;
@@ -20,6 +21,10 @@ public class UpDataInformationActivity extends BaseActivity {
     TextView titleRightText;
     @BindView(R.id.name_edit)
     ClearEditText nameEdit;
+    @BindView(R.id.title_back)
+    LinearLayout titleBack;
+    @BindView(R.id.activity_up_data_information)
+    LinearLayout activityUpDataInformation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +41,12 @@ public class UpDataInformationActivity extends BaseActivity {
 
     }
 
-    @OnClick(R.id.title_right_text)
-    public void onClick() {
+    @OnClick({R.id.title_back})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.title_back:
+                finish();
+                break;
+        }
     }
 }

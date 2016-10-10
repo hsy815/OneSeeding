@@ -40,7 +40,7 @@ public class PropertyImgAdapter extends RecyclerView.Adapter<PropertyImgAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, final int position) {
-        holder.img_item.setImageResource(R.mipmap.ic_launcher);
+//        holder.img_item.setImageResource(R.mipmap.ic_launcher);
 
         if (mOnItemClickLitener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
