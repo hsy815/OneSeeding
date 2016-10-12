@@ -27,20 +27,17 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.1.1'
-
     //网络框架
     compile 'com.squareup.okhttp3:okhttp:3.2.0'
     compile 'com.squareup.retrofit2:retrofit:2.0.0-beta4'
     compile 'com.squareup.retrofit2:adapter-rxjava:2.0.0-beta4'
     compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
     compile 'com.google.code.gson:gson:2.6.2'
-
     //注解
     compile 'com.jakewharton:butterknife:8.4.0'
     apt 'com.jakewharton:butterknife-compiler:8.4.0'
     //圆角图
     compile 'de.hdodenhof:circleimageview:2.0.0'
-
     //七牛直播
     testCompile 'junit:junit:4.12'
     compile 'com.qiniu:happy-dns:0.2.+'
@@ -49,4 +46,17 @@ dependencies {
     debugCompile 'com.squareup.leakcanary:leakcanary-android:1.4-beta2'
     releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
     testCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.4-beta2'
+    compile('io.socket:socket.io-client:0.6.3') {
+        exclude group: 'org.json', module: 'json'
+    }
+    compile files('libs/maxleap-sdk-core-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-facebook-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-pay-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-qq-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-im-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-social-v0.0.1.jar')
+    compile files('libs/maxleap-sdk-support-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-twitter-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-wechat-v0.9.9.jar')
+    compile files('libs/maxleap-sdk-weibo-v0.9.9.jar')
 }

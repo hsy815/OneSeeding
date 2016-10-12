@@ -15,6 +15,7 @@ import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,21 +23,33 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.hsy.directseeding.MyApplication;
 import com.hsy.directseeding.R;
 import com.hsy.directseeding.adapter.NewsAdapter;
 import com.hsy.directseeding.adapter.PropertyImgAdapter;
 import com.hsy.directseeding.entity.News;
+import com.hsy.directseeding.uitl.Constant;
+import com.hsy.directseeding.uitl.Variable;
 import com.hsy.directseeding.view.CameraPreviewFrameView;
 import com.hsy.directseeding.view.CircleImageView;
 import com.hsy.directseeding.view.MyRecyclerView;
+import com.maxleap.im.DataHandler;
+import com.maxleap.im.ParrotException;
+import com.maxleap.im.SimpleDataHandler;
+import com.maxleap.im.entity.Message;
+import com.maxleap.im.entity.MessageBuilder;
+import com.maxleap.im.entity.Room;
 import com.qiniu.pili.droid.streaming.AVCodecType;
 import com.qiniu.pili.droid.streaming.MediaStreamingManager;
 import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
-public class CameraStreamingActivity extends StreamingBaseActivity implements View.OnClickListener {
+import static com.hsy.directseeding.MyApplication.parrot;
+
+public class CameraStreamingActivity extends StreamingBaseActivity implements View.OnClickListener, AdapterView.OnItemClickListener {
 
     private LinearLayout status_top;
     private MyRecyclerView myRecycler;
@@ -62,12 +75,41 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
     private ListView streaming_list;
     private NewsAdapter newsAdapter;
     private List<News> newList = new ArrayList<>();
+    private Room rooms;
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.anim_activity_right_in, R.anim.anim_activity_left_out);
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
+        overridePendingTransition(R.anim.anim_activity_right_in, R.anim.anim_activity_left_out);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         //透明状态栏
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
+        cameraSeting();
+        initview();
+        StartRoom();
+    }
+
+    @Override
+    public boolean onRecordAudioFailedHandled(int err) {
+        mMediaStreamingManager.updateEncodingType(AVCodecType.SW_VIDEO_CODEC);
+        mMediaStreamingManager.startStreaming();
+        return true;
+    }
+
+    /**
+     * 视频处理
+     */
+    private void cameraSeting() {
 
         AspectFrameLayout afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
         afl.setShowMode(AspectFrameLayout.SHOW_MODE.FULL);
@@ -95,16 +137,11 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         mMediaStreamingManager.setStreamingPreviewCallback(this);
         mMediaStreamingManager.setAudioSourceCallback(this);
         //setFocusAreaIndicator();
-        initview();
     }
 
-    @Override
-    public boolean onRecordAudioFailedHandled(int err) {
-        mMediaStreamingManager.updateEncodingType(AVCodecType.SW_VIDEO_CODEC);
-        mMediaStreamingManager.startStreaming();
-        return true;
-    }
-
+    /**
+     * 视图
+     */
     private void initview() {
         status_top = (LinearLayout) findViewById(R.id.status_top);
         camera_button_holder = (RelativeLayout) findViewById(R.id.camera_button_holder);
@@ -121,7 +158,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         recyclerAdapter.setOnItemClickLitener(new PropertyImgAdapter.OnItemClickLitener() {
             @Override
             public void onItemClick(View view, int position) {
-                Pop(getData().get(position), (position % 2) == 1 ? 1 : -1);
+
             }
         });
 
@@ -145,6 +182,50 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         streaming_list = (ListView) findViewById(R.id.streaming_list);
         newsAdapter = new NewsAdapter(CameraStreamingActivity.this);
         streaming_list.setAdapter(newsAdapter);
+        streaming_list.setOnItemClickListener(this);
+    }
+
+
+    /**
+     * 创建聊天室
+     */
+    public void StartRoom() {
+        parrot.createRoom("啦啦",
+                Arrays.asList(Variable.CLIENT_KEY),
+                new DataHandler<Room>() {
+                    @Override
+                    public void onSuccess(Room room) {
+                        rooms = room;
+                        Log.e("rooms", "聊天室创建成功" + rooms.getName() + "聊天室成员数" + rooms.getMembers().size() + "聊天室成员一" + rooms.getMembers().get(0));
+                    }
+
+                    @Override
+                    public void onError(ParrotException e) {
+                        Log.e("rooms", "聊天室创建失败" + e);
+                    }
+
+                });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getMessage();
+      /*  if (rooms != null) {
+            parrot.updateRoom(rooms, new DataHandler<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.e("rooms", "聊天室更新成功");
+                }
+
+                @Override
+                public void onError(ParrotException e) {
+                }
+            });
+        } else {
+            Log.e("rooms", "聊天室更新失败");
+            StartRoom();
+        }*/
     }
 
     public List<String> getData() {
@@ -155,6 +236,124 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         return list;
     }
 
+    /**
+     * 发送消息到聊天室
+     *
+     * @param message
+     */
+    public void sendMessage(String message) {
+        Message msg = MessageBuilder.newBuilder()
+                .toRoom(rooms.getId()) // 目标的 Room 的 Id
+                .text(message);
+
+        Log.e("rooms", "发送消息了" + rooms.getId());
+        parrot.sendMessage(msg, new SimpleDataHandler<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.e("rooms", "发送消息成功");
+                Constant.toast_s("sendMessage() success");
+            }
+
+        });
+
+    }
+
+    /**
+     * 发送系统消息
+     *
+     * @param targetFriend
+     * @param message
+     */
+    public void sendSystemMessage(String targetFriend, String message) {
+        Message msg = MessageBuilder.newBuilder()
+                .toRoom(rooms.getId()) // 目标的 Room 的 Id
+                .text(message);
+
+        parrot.sendSystemMessage(null, msg, new DataHandler<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.e("rooms", "发送系统消息成功");
+                Constant.toast_s("sendMessage() success");
+            }
+
+            @Override
+            public void onError(ParrotException e) {
+            }
+        });
+    }
+
+    /**
+     * 获取聊天室消息
+     */
+    public void getMessage() {
+        parrot.onMessage(new SimpleDataHandler<Message>() {
+            @Override
+            public void onSuccess(Message message) {
+                if (message.getFrom().fromRoom()) {
+                    Log.e("rooms", "取到聊天时消息");
+                    News news = new News();
+                    news.name = message.getFrom().getId();
+                    news.content = message.getContent().getBody().toString();
+                    news.type = 1;
+                    newList.add(news);
+                    newsAdapter.clear();
+                    newsAdapter.addItem(newList);
+                    newsAdapter.notifyDataSetChanged();
+                }
+            }
+        });
+
+        parrot.onSystemMessage(new SimpleDataHandler<Message>() {
+            @Override
+            public void onSuccess(Message message) {
+                Log.e("rooms", "取到系统消息" + message.getContent().toString());
+                News news = new News();
+                news.name = message.getTo().getId();
+                news.content = message.getContent().getBody().toString();
+                news.type = 1;
+                newList.add(news);
+                newsAdapter.clear();
+                newsAdapter.addItem(newList);
+                newsAdapter.notifyDataSetChanged();
+            }
+        });
+    }
+
+    /**
+     * 添加成员
+     * @param newMembers
+     */
+    private void addRoom(List<String> newMembers){
+        parrot.addRoomMembers(rooms.getId(), newMembers, new DataHandler<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.e("rooms","添加成员成功"+aVoid.toString());
+            }
+
+            @Override
+            public void onError(ParrotException e) {
+                Log.e("rooms","添加成员失败"+e);
+            }
+        });
+    }
+
+    /**
+     * 移除成员
+     * @param removedMembers
+     */
+    private void removeRoom(List<String> removedMembers){
+        parrot.removeRoomMembers(rooms.getId(), removedMembers, new DataHandler<Void>() {
+            @Override
+            public void onSuccess(Void aVoid) {
+                Log.e("rooms","移除成员成功"+aVoid.toString());
+            }
+
+            @Override
+            public void onError(ParrotException e) {
+                Log.e("rooms","移除成员失败"+e);
+            }
+        });
+    }
     /**
      * 获取手机状态栏高度
      *
@@ -169,7 +368,13 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         return result;
     }
 
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        News news = (News) newsAdapter.getItem(position);
+        Pop(news.name, 1);
+    }
 
+    private int popORdia = 0;
     @Override
     public void onClick(View v) {
         Intent intent;
@@ -196,14 +401,16 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
                 relativeLayout2.setVisibility(View.GONE);
                 break;
             case R.id.image5:
-                News news = new News();
+                /*News news = new News();
                 news.name = "me";
                 news.content = edit_querys.getText().toString();
                 news.type = 1;
                 newList.add(news);
                 newsAdapter.clear();
                 newsAdapter.addItem(newList);
-                newsAdapter.notifyDataSetChanged();
+                newsAdapter.notifyDataSetChanged();*/
+                sendMessage(edit_querys.getText().toString());
+                sendSystemMessage("xxf", edit_querys.getText().toString());
                 edit_querys.setText("");
                 break;
             case R.id.pop_quit:
@@ -211,9 +418,11 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
                 break;
             case R.id.pop_btn1:
                 Dia("确定要将此人踢出房间?");
+                popORdia = 1;
                 break;
             case R.id.pop_btn2:
                 Dia("确定要将此人禁言?");
+                popORdia = 2;
                 break;
             case R.id.dia_btn1:
                 if (dialog2 != null) dialog2.dismiss();
@@ -221,6 +430,17 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
             case R.id.dia_btn2:
                 if (dialog2 != null) dialog2.dismiss();
                 if (dialog != null) dialog.dismiss();
+                if(popORdia == 1){
+                    //踢人
+                    popORdia = 0;
+
+                }else if(popORdia == 2){
+                    //禁言
+                    popORdia = 0;
+                    List<String> list = new ArrayList<>();
+                    list.add(pop_name.getText().toString());
+                    removeRoom(list);
+                }
                 break;
         }
     }
@@ -301,6 +521,46 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
     };
 
     @Override
+    protected void onPause() {
+        super.onPause();
+        parrot.offMessage(new SimpleDataHandler<Message>() {
+            @Override
+            public void onSuccess(Message message) {
+
+            }
+        });
+        parrot.offSystemMessage(new SimpleDataHandler<Message>() {
+            @Override
+            public void onSuccess(Message message) {
+
+            }
+        });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (rooms != null) {
+            parrot.deleteRoom(rooms.getId(), new DataHandler<Void>() {
+                @Override
+                public void onSuccess(Void aVoid) {
+                    Log.e("rooms", "聊天室销毁");
+                }
+
+                @Override
+                public void onError(ParrotException e) {
+                }
+            });
+        }
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.anim_activity_left_in, R.anim.anim_activity_right_out);
+    }
+
+    @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         if (event.getAction() == KeyEvent.ACTION_DOWN
                 && KeyEvent.KEYCODE_BACK == keyCode) {
@@ -310,4 +570,5 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         }
         return super.onKeyDown(keyCode, event);
     }
+
 }

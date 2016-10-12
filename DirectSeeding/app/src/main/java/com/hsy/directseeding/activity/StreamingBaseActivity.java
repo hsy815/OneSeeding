@@ -2,6 +2,7 @@ package com.hsy.directseeding.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.Bitmap;
 import android.hardware.Camera;
@@ -177,6 +178,18 @@ public class StreamingBaseActivity extends Activity implements
             }
         }
     };
+
+    @Override
+    public void startActivity(Intent intent) {
+        super.startActivity(intent);
+        overridePendingTransition(R.anim.anim_activity_right_in, R.anim.anim_activity_left_out);
+    }
+
+    @Override
+    public void startActivityForResult(Intent intent, int requestCode, Bundle options) {
+        super.startActivityForResult(intent, requestCode, options);
+        overridePendingTransition(R.anim.anim_activity_right_in, R.anim.anim_activity_left_out);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -826,5 +839,12 @@ public class StreamingBaseActivity extends Activity implements
             });
         }
     }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.anim_activity_left_in, R.anim.anim_activity_right_out);
+    }
+
 }
 

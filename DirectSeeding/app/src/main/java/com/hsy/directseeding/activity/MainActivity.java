@@ -3,19 +3,26 @@ package com.hsy.directseeding.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hsy.directseeding.BaseActivity;
+import com.hsy.directseeding.MyApplication;
 import com.hsy.directseeding.R;
+import com.hsy.directseeding.uitl.Variable;
+import com.maxleap.im.DataHandler;
+import com.maxleap.im.MLParrot;
+import com.maxleap.im.ParrotException;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class MainActivity extends BaseActivity {
+
 
     @BindView(R.id.title_text)
     TextView titleText;
@@ -27,12 +34,18 @@ public class MainActivity extends BaseActivity {
     TextView loginText;
 
     private int VISIBILITY_PASSWORD = 1;
+    private MLParrot mlParrot;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        if (MyApplication.parrot == null) {
+            mlParrot = MyApplication.parrot;
+        } else {
+            mlParrot = MLParrot.getInstance();
+        }
         initView();
     }
 
@@ -56,7 +69,20 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             case R.id.login_text:
-                startActivity(new Intent(MainActivity.this, StartActivity.class));
+                mlParrot.initWithCustomAccount(Variable.APPLICATION_ID, Variable.REST_API_KEY, Variable.CLIENT_KEY, Variable.INSTALLATIONID);
+//                mlParrot.initWithMLUser(Variable.APPLICATION_ID, Variable.REST_API_KEY, "15361081976", "815720hsy");
+                mlParrot.login(new DataHandler<String>() {
+                    @Override
+                    public void onSuccess(String id) {
+                        Log.e("MainActivity", "登陆成功啦"+id);
+                        startActivity(new Intent(MainActivity.this, StartActivity.class));
+                    }
+
+                    @Override
+                    public void onError(ParrotException e) {
+                        Log.e("MainActivity", "登陆失败"+e);
+                    }
+                });
                 break;
         }
     }
