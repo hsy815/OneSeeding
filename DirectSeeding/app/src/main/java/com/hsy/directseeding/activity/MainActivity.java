@@ -69,7 +69,7 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             case R.id.login_text:
-                mlParrot.initWithCustomAccount(Variable.APPLICATION_ID, Variable.REST_API_KEY, Variable.CLIENT_KEY, Variable.INSTALLATIONID);
+                mlParrot.initWithCustomAccount(Variable.APPLICATION_ID, Variable.REST_API_KEY, "hsys", Variable.INSTALLATIONID);
 //                mlParrot.initWithMLUser(Variable.APPLICATION_ID, Variable.REST_API_KEY, "15361081976", "815720hsy");
                 mlParrot.login(new DataHandler<String>() {
                     @Override

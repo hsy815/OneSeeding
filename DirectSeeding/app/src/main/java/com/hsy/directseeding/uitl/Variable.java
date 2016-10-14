@@ -5,6 +5,7 @@ package com.hsy.directseeding.uitl;
  */
 public class Variable {
 
+
     public static String ACCESS_TOKEN;
     public static String APPLICATION_ID = "57fd91ee69dbd10007376d10";
 //    public static String APPLICATION_ID = "57fcb1fe69dbd10007371373";

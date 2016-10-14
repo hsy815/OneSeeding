@@ -96,7 +96,11 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         cameraSeting();
         initview();
-        StartRoom();
+//        StartRoom();
+        rooms = new Room();
+        rooms.setId("df8ea520e8354e239b60cba00913e5af");
+        addRoom("hsys");
+
     }
 
     @Override
@@ -183,28 +187,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         newsAdapter = new NewsAdapter(CameraStreamingActivity.this);
         streaming_list.setAdapter(newsAdapter);
         streaming_list.setOnItemClickListener(this);
-    }
 
-
-    /**
-     * 创建聊天室
-     */
-    public void StartRoom() {
-        parrot.createRoom("啦啦",
-                Arrays.asList(Variable.CLIENT_KEY),
-                new DataHandler<Room>() {
-                    @Override
-                    public void onSuccess(Room room) {
-                        rooms = room;
-                        Log.e("rooms", "聊天室创建成功" + rooms.getName() + "聊天室成员数" + rooms.getMembers().size() + "聊天室成员一" + rooms.getMembers().get(0));
-                    }
-
-                    @Override
-                    public void onError(ParrotException e) {
-                        Log.e("rooms", "聊天室创建失败" + e);
-                    }
-
-                });
     }
 
     @Override
@@ -228,12 +211,25 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         }*/
     }
 
-    public List<String> getData() {
-        List<String> list = new ArrayList<>();
-        for (int i = 1; i <= 10; i++) {
-            list.add("item" + i);
-        }
-        return list;
+    /**
+     * 创建聊天室
+     */
+    public void StartRoom() {
+        parrot.createRoom("啦啦",
+                Arrays.asList("hsy"),//Variable.CLIENT_KEY
+                new DataHandler<Room>() {
+                    @Override
+                    public void onSuccess(Room room) {
+                        rooms = room;
+                        Log.e("rooms", "聊天室创建成功" + rooms.getName() + "聊天室成员数" + rooms.getMembers().size() + "聊天室成员一" + rooms.getMembers().get(0));
+                    }
+
+                    @Override
+                    public void onError(ParrotException e) {
+                        Log.e("rooms", "聊天室创建失败" + e);
+                    }
+
+                });
     }
 
     /**
@@ -256,6 +252,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
 
         });
 
+//        Log.e("rooms", "聊天室创建成功" + rooms.getName() + "聊天室成员数" + rooms.getMembers().size() + "聊天室成员一" + rooms.getMembers().get(0));
     }
 
     /**
@@ -269,7 +266,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
                 .toRoom(rooms.getId()) // 目标的 Room 的 Id
                 .text(message);
 
-        parrot.sendSystemMessage(null, msg, new DataHandler<Void>() {
+        parrot.sendSystemMessage("aaa", msg, new DataHandler<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e("rooms", "发送系统消息成功");
@@ -308,7 +305,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
             public void onSuccess(Message message) {
                 Log.e("rooms", "取到系统消息" + message.getContent().toString());
                 News news = new News();
-                news.name = message.getTo().getId();
+                news.name = message.getFrom().getId();
                 news.content = message.getContent().getBody().toString();
                 news.type = 1;
                 newList.add(news);
@@ -321,39 +318,44 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
 
     /**
      * 添加成员
-     * @param newMembers
+     *
+     * @param Members
      */
-    private void addRoom(List<String> newMembers){
-        parrot.addRoomMembers(rooms.getId(), newMembers, new DataHandler<Void>() {
+    private void addRoom(String Members) {
+        List<String> list = new ArrayList<>();
+        list.add(Members);
+        parrot.addRoomMembers(rooms.getId(), list, new DataHandler<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.e("rooms","添加成员成功"+aVoid.toString());
+                Log.e("rooms", "添加成员成功");
             }
 
             @Override
             public void onError(ParrotException e) {
-                Log.e("rooms","添加成员失败"+e);
+                Log.e("rooms", "添加成员失败" + e);
             }
         });
     }
 
     /**
      * 移除成员
+     *
      * @param removedMembers
      */
-    private void removeRoom(List<String> removedMembers){
+    private void removeRoom(List<String> removedMembers) {
         parrot.removeRoomMembers(rooms.getId(), removedMembers, new DataHandler<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.e("rooms","移除成员成功"+aVoid.toString());
+                Log.e("rooms", "移除成员成功" + aVoid.toString());
             }
 
             @Override
             public void onError(ParrotException e) {
-                Log.e("rooms","移除成员失败"+e);
+                Log.e("rooms", "移除成员失败" + e);
             }
         });
     }
+
     /**
      * 获取手机状态栏高度
      *
@@ -375,6 +377,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
     }
 
     private int popORdia = 0;
+
     @Override
     public void onClick(View v) {
         Intent intent;
@@ -430,11 +433,11 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
             case R.id.dia_btn2:
                 if (dialog2 != null) dialog2.dismiss();
                 if (dialog != null) dialog.dismiss();
-                if(popORdia == 1){
+                if (popORdia == 1) {
                     //踢人
                     popORdia = 0;
 
-                }else if(popORdia == 2){
+                } else if (popORdia == 2) {
                     //禁言
                     popORdia = 0;
                     List<String> list = new ArrayList<>();
@@ -569,6 +572,14 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+
+    public List<String> getData() {
+        List<String> list = new ArrayList<>();
+        for (int i = 1; i <= 10; i++) {
+            list.add("item" + i);
+        }
+        return list;
     }
 
 }
