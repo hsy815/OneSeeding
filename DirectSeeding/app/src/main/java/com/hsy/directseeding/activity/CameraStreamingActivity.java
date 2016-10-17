@@ -23,13 +23,11 @@ import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.hsy.directseeding.MyApplication;
 import com.hsy.directseeding.R;
 import com.hsy.directseeding.adapter.NewsAdapter;
 import com.hsy.directseeding.adapter.PropertyImgAdapter;
 import com.hsy.directseeding.entity.News;
 import com.hsy.directseeding.uitl.Constant;
-import com.hsy.directseeding.uitl.Variable;
 import com.hsy.directseeding.view.CameraPreviewFrameView;
 import com.hsy.directseeding.view.CircleImageView;
 import com.hsy.directseeding.view.MyRecyclerView;
@@ -75,6 +73,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
     private ListView streaming_list;
     private NewsAdapter newsAdapter;
     private List<News> newList = new ArrayList<>();
+    List<String> listMembers = new ArrayList<>();
     private Room rooms;
 
     @Override
@@ -98,7 +97,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         initview();
 //        StartRoom();
         rooms = new Room();
-        rooms.setId("df8ea520e8354e239b60cba00913e5af");
+        rooms.setId("f396bbf3bf764c9783788d56080d12bf");
         addRoom("hsys");
 
     }
@@ -259,18 +258,17 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
      * 发送系统消息
      *
      * @param targetFriend
-     * @param message
+     * @param content
      */
-    public void sendSystemMessage(String targetFriend, String message) {
+    public void sendSystemMessage(String targetFriend, String content) {
         Message msg = MessageBuilder.newBuilder()
-                .toRoom(rooms.getId()) // 目标的 Room 的 Id
-                .text(message);
-
-        parrot.sendSystemMessage("aaa", msg, new DataHandler<Void>() {
+                .toRoom(targetFriend)
+                .text(content);
+        Log.e("rooms", "发送系统消息" + rooms.getId());
+        parrot.sendSystemMessage(targetFriend, msg, new DataHandler<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e("rooms", "发送系统消息成功");
-                Constant.toast_s("sendMessage() success");
             }
 
             @Override
@@ -305,9 +303,9 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
             public void onSuccess(Message message) {
                 Log.e("rooms", "取到系统消息" + message.getContent().toString());
                 News news = new News();
-                news.name = message.getFrom().getId();
+                news.name = "系统消息";
                 news.content = message.getContent().getBody().toString();
-                news.type = 1;
+                news.type = 2;
                 newList.add(news);
                 newsAdapter.clear();
                 newsAdapter.addItem(newList);
@@ -322,9 +320,9 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
      * @param Members
      */
     private void addRoom(String Members) {
-        List<String> list = new ArrayList<>();
-        list.add(Members);
-        parrot.addRoomMembers(rooms.getId(), list, new DataHandler<Void>() {
+        listMembers.clear();
+        listMembers.add(Members);
+        parrot.addRoomMembers(rooms.getId(), listMembers, new DataHandler<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
                 Log.e("rooms", "添加成员成功");
@@ -346,7 +344,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
         parrot.removeRoomMembers(rooms.getId(), removedMembers, new DataHandler<Void>() {
             @Override
             public void onSuccess(Void aVoid) {
-                Log.e("rooms", "移除成员成功" + aVoid.toString());
+                Log.e("rooms", "移除成员成功");
             }
 
             @Override
@@ -412,8 +410,8 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
                 newsAdapter.clear();
                 newsAdapter.addItem(newList);
                 newsAdapter.notifyDataSetChanged();*/
-                sendMessage(edit_querys.getText().toString());
-                sendSystemMessage("xxf", edit_querys.getText().toString());
+//                sendMessage(edit_querys.getText().toString());
+                sendSystemMessage(rooms.getId(), edit_querys.getText().toString() + "被禁言");
                 edit_querys.setText("");
                 break;
             case R.id.pop_quit:
@@ -440,9 +438,10 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
                 } else if (popORdia == 2) {
                     //禁言
                     popORdia = 0;
-                    List<String> list = new ArrayList<>();
-                    list.add(pop_name.getText().toString());
-                    removeRoom(list);
+//                    List<String> list = new ArrayList<>();
+//                    list.add(pop_name.getText().toString());
+//                    removeRoom(list);
+                    sendSystemMessage(rooms.getId(), pop_name.getText().toString() + "被禁言");
                 }
                 break;
         }
@@ -544,6 +543,7 @@ public class CameraStreamingActivity extends StreamingBaseActivity implements Vi
     protected void onDestroy() {
         super.onDestroy();
         if (rooms != null) {
+            removeRoom(listMembers);
             parrot.deleteRoom(rooms.getId(), new DataHandler<Void>() {
                 @Override
                 public void onSuccess(Void aVoid) {
