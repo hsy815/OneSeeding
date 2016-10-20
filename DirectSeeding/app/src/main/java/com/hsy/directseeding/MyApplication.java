@@ -24,7 +24,7 @@ import com.squareup.leakcanary.LeakCanary;
 public class MyApplication extends Application {
 
     public static Context context;
-    public static MLParrot parrot;
+
 
     @Override
     public void onCreate() {
@@ -39,6 +39,6 @@ public class MyApplication extends Application {
         StreamingEnv.init(getApplicationContext());
         LeakCanary.install(this);
         Variable.INSTALLATIONID = MLInstallation.getCurrentInstallation().getInstallationId();
-        parrot = MLParrot.getInstance();
+
     }
 }

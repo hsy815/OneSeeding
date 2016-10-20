@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.hsy.directseeding.BaseActivity;
-import com.hsy.directseeding.MyApplication;
 import com.hsy.directseeding.R;
 import com.hsy.directseeding.uitl.Variable;
 import com.maxleap.im.DataHandler;
@@ -41,11 +40,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
-        if (MyApplication.parrot == null) {
-            mlParrot = MyApplication.parrot;
-        } else {
-            mlParrot = MLParrot.getInstance();
-        }
+        mlParrot = MLParrot.getInstance();
         initView();
     }
 
@@ -69,18 +64,18 @@ public class MainActivity extends BaseActivity {
                 }
                 break;
             case R.id.login_text:
-                mlParrot.initWithCustomAccount(Variable.APPLICATION_ID, Variable.REST_API_KEY, "hsys", Variable.INSTALLATIONID);
+                mlParrot.initWithCustomAccount(Variable.APPLICATION_ID, Variable.REST_API_KEY, "hsy", Variable.INSTALLATIONID);
 //                mlParrot.initWithMLUser(Variable.APPLICATION_ID, Variable.REST_API_KEY, "15361081976", "815720hsy");
                 mlParrot.login(new DataHandler<String>() {
                     @Override
                     public void onSuccess(String id) {
-                        Log.e("MainActivity", "登陆成功啦"+id);
+                        Log.e("MainActivity", "登陆成功啦" + id);
                         startActivity(new Intent(MainActivity.this, StartActivity.class));
                     }
 
                     @Override
                     public void onError(ParrotException e) {
-                        Log.e("MainActivity", "登陆失败"+e);
+                        Log.e("MainActivity", "登陆失败" + e);
                     }
                 });
                 break;

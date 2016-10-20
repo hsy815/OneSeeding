@@ -22,6 +22,7 @@
         android:visibility="gone" />
 
     <RelativeLayout
+        android:id="@+id/back_rel"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
@@ -36,6 +37,8 @@
             android:fastScrollEnabled="false"
             android:scrollbars="none"
             android:stackFromBottom="true"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
             android:transcriptMode="alwaysScroll">
 
         </ListView>
@@ -43,7 +46,7 @@
         <LinearLayout
             android:id="@+id/linearLayout"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="15dp"
@@ -106,43 +109,78 @@
 
             </RelativeLayout>
 
-            <RelativeLayout
-                android:id="@+id/relativeLayout2"
+            <LinearLayout
+                android:id="@+id/mlive_room_input"
                 android:layout_width="match_parent"
-                android:layout_height="45dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:orientation="vertical"
                 android:visibility="gone">
 
 
-                <EditText
-                    android:id="@+id/edit_querys"
+                <LinearLayout
+                    android:id="@+id/btn_input_area"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_margin="5dp"
-                    android:layout_toStartOf="@+id/image5"
-                    android:background="@drawable/yuanjiao_brck"
-                    android:imeOptions="actionSend"
-                    android:paddingLeft="10dp" />
+                    android:layout_height="44dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
 
-                <ImageView
-                    android:id="@+id/image4"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginEnd="10dp"
-                    android:src="@mipmap/ic_launcher" />
+                    <EditText
+                        android:id="@+id/chat_input"
+                        android:layout_width="0dp"
+                        android:layout_height="34dp"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="12dp"
+                        android:layout_marginRight="6dp"
+                        android:layout_weight="1"
+                        android:background="@drawable/mlive_bg_room_input"
+                        android:paddingLeft="8dp"
+                        android:paddingRight="8dp"
+                        android:textSize="16sp" />
 
-                <ImageView
-                    android:id="@+id/image5"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_alignTop="@+id/image4"
-                    android:layout_marginEnd="15dp"
-                    android:layout_toStartOf="@+id/image4"
-                    android:src="@mipmap/ic_launcher" />
+                    <ImageView
+                        android:id="@+id/chat_emoji"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_marginLeft="10dp"
+                        android:src="@mipmap/btn_emoji_normal" />
 
+                    <TextView
+                        android:id="@+id/chat_send"
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
+                        android:gravity="center"
+                        android:textSize="16sp"
+                        android:text="发送"/>
 
-            </RelativeLayout>
+                </LinearLayout>
 
+                <LinearLayout
+                    android:id="@+id/ly_kvml"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/emoji_viewpager"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:numColumns="7" />
+
+                    <com.hsy.directseeding.emoji.Indicator
+                        android:id="@+id/emoji_indicator"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:layout_marginBottom="10dp"
+                        android:layout_marginTop="10dp" />
+
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
 
     </RelativeLayout>

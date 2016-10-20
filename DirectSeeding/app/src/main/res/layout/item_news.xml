@@ -16,7 +16,7 @@
         android:id="@+id/news_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="sadgfgsdfgsa"/>
+        android:text=""/>
 
 </LinearLayout>
 
